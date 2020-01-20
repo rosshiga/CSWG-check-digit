@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+	<script src="./data.js"></script>
+	<script>
+	function myFunction(){
+		let checks = [];
+		let form = document.getElementById("codes").value;
+		let output = document.getElementById("output")
+		output.value = '';
+		//alert(form);
+		var arrayOfLines = form.split("\n");
+		arrayOfLines.forEach(fiveCodeRaw => {
+        	fiveCode = parseInt(fiveCodeRaw)
+			if(fiveCode > 0 && fiveCode < 100000){
+				let completeCode = String(fiveCode) + String(data[fiveCode]);
+            	while(completeCode.length != 6){
+            	completeCode = '0' + String(completeCode)
+            		}
+				output.value += String(completeCode) + '\r\n';
+				}
+            else{
+        	output.value += '\r\n';
+				}
+        })
+        
+		output.value = output.value.slice(0,-1)
+		let x = (output.value.match(/\n/g) || '').length + 1
+		let y = (form.match(/\n/g) || '').length + 1
+		if(x != y)
+			alert("Rows returned do not match number of rows sent, check for bad lines")
+		
+		//console.log(checks)
+		return false;
+	}
+	</script>
+<meta charset="utf-8">
+<title>CSWG Check Digit Calc</title>
+</head>
+<h1>CSWG Check Digit Calculator</h1>
+List codes here (one per line):
+	<br/>
+<textarea rows="4" cols="50" form="form" id="codes">
+</textarea>
+<form onsubmit="return myFunction()" id="form">
+  <input type="submit">
+</form>
+<br/>
+	Output:
+	<br/>
+	<textarea rows="400" cols="" form="form" id="output">
+</textarea>
+<body>
+</body>
+</html>
